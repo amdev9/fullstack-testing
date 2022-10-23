@@ -35,6 +35,7 @@ const validatorObj = {
       },
     },
   },
+  validationAction: "error"
 };
 
 const client = new MongoClient(mongoUrl);
@@ -44,11 +45,13 @@ async function initMongo() {
   console.log("Connected successfully to server");
   const db = client.db(dbName);
 
-  if (db.collection(collName)) {
-    return db.collection(collName);
+  const collection = await client.db(dbName).listCollections({}, { nameOnly: true }).toArray()
+  
+  if (collection.filter(collectionItem => collectionItem.name === collName).length) {
+    return db
   } else {
-    // create collection with schema validation
-    return db.createCollection(collName, validatorObj);
+    await db.createCollection(collName, validatorObj);
+    return db
   }
 }
 
