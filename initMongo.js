@@ -1,11 +1,10 @@
 const config = require("config");
 const { MongoClient } = require("mongodb");
 
-const mongoUrl = config.get("mongoUrl"); //"mongodb://localhost:27017";
-const dbName = config.get("dbName"); //"track";
-const collName = config.get("collName"); //  "tracks";
+const mongoUrl = config.get("mongoUrl");
+const dbName = config.get("dbName");
+const collName = config.get("collName");
 
-console.log(mongoUrl, dbName, collName)
 const validatorObj = {
   validator: {
     $jsonSchema: {

@@ -2,7 +2,6 @@
 //   track(event: string, ...tags: string[]): void
 // }
 
-
 const trackUrl = "http://localhost:8001/track";
 
 class Tracker {
