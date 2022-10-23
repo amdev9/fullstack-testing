@@ -5,38 +5,42 @@
 const trackUrl = "http://localhost:8001/track";
 
 class Tracker {
+
+  #intervalID
+  #data
+
   constructor(window) {
-    this.intervalID = 0;
-    this.data = [];
+    this.#intervalID = 0;
+    this.#data = [];
 
     window.addEventListener("beforeunload", () => {
-      this.postData("beforeunload");
-      this.data = [];
-      clearInterval(this.intervalID);
+      this.#postData("beforeunload");
+      this.#data = [];
+      clearInterval(this.#intervalID);
     });
 
-    this.start();
+    this.#start();
   }
 
-  start = () => {
-    this.intervalID = setInterval(() => {
-      this.postData("interval");
-      this.data = [];
+  #start = () => {
+    this.#intervalID = setInterval(() => {
+      this.#postData("interval");
+      this.#data = [];
     }, 1000);
   };
 
-  handleErrors(response) {
+  #handleErrors(response) {
     if (!response.ok) {
       throw Error(response.statusText);
     }
     return response;
   }
 
-  postData = (reason) => {
-    if (!this.data.length) return;
+  #postData = (reason) => {
+    if (!this.#data.length) return;
 
-    const tempData = this.data;
-    console.info(reason, "this.data", this.data);
+    const tempData = this.#data;
+    console.info(reason, "this.data", this.#data);
 
     fetch("http://localhost:8001/track", {
       method: "POST",
@@ -46,12 +50,12 @@ class Tracker {
       body: JSON.stringify(tempData),
       keepalive: true,
     })
-      .then(this.handleErrors)
+      .then(this.#handleErrors)
       .then((response) => {
         console.log("ok", response);
       })
       .catch((error) => {
-        this.data.push(...tempData);
+        this.#data.push(...tempData);
         console.log("fetch error", error);
       });
   };
@@ -64,10 +68,10 @@ class Tracker {
       title: document.title,
       ts: new Date().toISOString(),
     };
-    this.data.push(newEvent);
-    if (this.data.length >= 3) {
-      this.postData(">=3");
-      this.data = [];
+    this.#data.push(newEvent);
+    if (this.#data.length >= 3) {
+      this.#postData(">=3");
+      this.#data = [];
     }
   };
 }
