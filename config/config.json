@@ -1,0 +1,7 @@
+{
+  "appPort": 8000,
+  "trackerPort": 8001,
+  "mongoUrl": "mongodb://localhost:27017",
+  "dbName": "track",
+  "collName": "tracks"
+}
