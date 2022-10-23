@@ -9,7 +9,7 @@ class Tracker {
     this.intervalID = 0;
     this.data = [];
 
-    window.addEventListener("beforeunload", (event) => {
+    window.addEventListener("beforeunload", () => {
       this.postData("beforeunload");
       this.data = [];
       clearInterval(this.intervalID);
@@ -32,11 +32,11 @@ class Tracker {
     return response;
   }
 
-  postData = (ind) => {
+  postData = (reason) => {
     if (!this.data.length) return;
 
     const tempData = this.data;
-    console.info(ind, "this.data", this.data);
+    console.info(reason, "this.data", this.data);
 
     fetch("http://localhost:8001/track", {
       method: "POST",
