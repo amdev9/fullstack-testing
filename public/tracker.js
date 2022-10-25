@@ -60,7 +60,7 @@ class Tracker {
       });
   };
 
-  track = async (event, ...tags) => {
+  track = (event, ...tags) => {
     const newEvent = {
       event: event,
       tags: tags,
