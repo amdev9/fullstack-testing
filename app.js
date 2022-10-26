@@ -3,7 +3,6 @@ const path = require("path");
 const cors = require("cors");
 const config = require("config");
 
-
 const initMongo = require("./initMongo");
 
 const app = express();
@@ -27,11 +26,11 @@ tracker.use(cors());
 tracker.use(express.json());
 
 initMongo()
-  .then(db => {
+  .then((db) => {
     tracker.post("/track", async (req, res) => {
       const data = req.body;
       try {
-        const collName = config.get("collName")
+        const collName = config.get("collName");
         db.collection(collName).insertMany(data);
         res.sendStatus(200);
       } catch (e) {
@@ -45,5 +44,4 @@ initMongo()
   })
   .catch((e) => {
     console.error("Error initializing db", e);
-  })
- 
+  });

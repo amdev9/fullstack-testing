@@ -5,9 +5,8 @@
 const trackUrl = "http://localhost:8001/track";
 
 class Tracker {
-
-  #intervalID
-  #data
+  #intervalID;
+  #data;
 
   constructor(window) {
     this.#intervalID = 0;
