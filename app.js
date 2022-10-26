@@ -8,6 +8,7 @@ const initMongo = require("./initMongo");
 const app = express();
 const tracker = express();
 const appPort = config.get("appPort");
+const collName = config.get("collName");
 const trackerPort = config.get("trackerPort");
 
 app.get(["/", "/1.html", "/2.html"], (req, res) => {
@@ -30,7 +31,7 @@ initMongo()
     tracker.post("/track", async (req, res) => {
       const data = req.body;
       try {
-        const collName = config.get("collName");
+
         db.collection(collName).insertMany(data);
         res.sendStatus(200);
       } catch (e) {
