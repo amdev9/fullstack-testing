@@ -4,6 +4,7 @@ const { MongoClient } = require("mongodb");
 const mongoUrl = config.get("mongoUrl");
 const dbName = config.get("dbName");
 const collName = config.get("collName");
+const descriptionTemplate = (fieldName) => `'${fieldName}' must be a string and is required`
 
 const validatorObj = {
   validator: {
@@ -14,23 +15,23 @@ const validatorObj = {
       properties: {
         event: {
           bsonType: "string",
-          description: "'event' must be a string and is required",
+          description: descriptionTemplate("event")
         },
         tags: {
           bsonType: ["array"],
-          description: "'tags' must be an array and is required",
+          description: descriptionTemplate("tags")
         },
         url: {
           bsonType: "string",
-          description: "'url' must be a string and is required",
+          description: descriptionTemplate("url")
         },
         title: {
           bsonType: "string",
-          description: "'title' must be a string and is required",
+          description: descriptionTemplate("title")
         },
         ts: {
           bsonType: "string",
-          description: "'ts' must be a string and is required",
+          description: descriptionTemplate("ts")
         },
       },
     },
